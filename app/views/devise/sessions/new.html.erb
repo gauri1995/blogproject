@@ -1,0 +1,59 @@
+<body class="bg-login printable" >
+
+  <div class="login-screen">
+    <div class="panel-login ">
+      <div class="panel-heading" style="margin-top: 10px;"><img src="/assets/globals/teamfox.png" height="100" alt=""></div><!--.panel-heading-->
+
+    <div  class="panel-body active">
+      <h2>Login to Dashboard</h2>
+      <% if flash[:alert].present? %>
+         <p style="color:  #db3530;">
+         <% unless flash.empty? %>
+       <script type="text/javascript">
+        <% flash.each do |f| %>
+            <% type = f.to_s.gsub('alert','error').gsub('notice','info') %>
+            toastr['<%= type %>']
+        <% end %>
+    </script>
+<% end %></p>
+      <% end %>
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name) , :html => {:id =>"Form", class: 'form-horizontal parsley-validate-icon'}) do |f| %>
+            <div class="form-group input-wrapper">
+              <%= f.email_field :email,  :placeholder => "Enter Your Email" , class: 'form-control' ,:style => 'color:white;padding-left:10px;' , required: true%>
+            </div>
+            <br>
+            <div class="form-group input-wrapper">
+              <%= f.password_field :password, autocomplete: "off", :placeholder => "Enter Your Password" , class: 'form-control', :style => 'color:white;padding-left:10px;' , required: true%>
+            </div>
+            <br>
+            <div class="actions" style="text-align: center;" >
+             <%= f.submit "Login" , :style => 'background-color :#db3530; border-width: 0px ;width: 98px;color : white;' ,class: 'btn btn-red btn-ripple' %>
+            </div>
+        <% end %>
+
+       <%= render "devise/shared/links" %>
+
+    </div>
+    </div>
+  </div>
+    <div class="bg-blur dark">
+    <div class="overlay"></div><!--.overlay-->
+  </div><!--.bg-blur-->
+
+  <svg version="1.1" xmlns='http://www.w3.org/2000/svg'>
+    <filter id='blur'>
+      <feGaussianBlur stdDeviation='7' />
+    </filter>
+  </svg>
+
+
+</body>
+
+<script>
+  $(document).ready(function () {
+    Pleasure.init();
+    Layout.init();
+    FormsValidationsParsley.init();
+  });
+  </script>
+

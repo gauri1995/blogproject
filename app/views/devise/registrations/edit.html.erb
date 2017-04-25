@@ -1,0 +1,49 @@
+<div class="container" style="margin-left: 20px;">
+<h2 >Edit <%= resource_name.to_s.humanize %></h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'parsley-validate' }) do |f| %>
+  <%= devise_error_messages! %>
+  
+
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+  <% end %>
+   <br>
+   <div class="row example-row">
+              <div class="col-md-3">Password</div><br><!--.col-md-3-->
+              <div class="col-md-9">
+               <%= f.password_field :password, autocomplete: "off" , class: 'form-control',required:true %>
+              </div><!--.col-md-9-->
+            </div><!--.row-->
+  <br>
+  <div class="row example-row">
+              <div class="col-md-3">Password Confirmation</div><br /><!--.col-md-3-->
+              <div class="col-md-9">
+              <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' ,required:true %>
+
+              </div><!--.col-md-9-->
+            </div><!--.row-->
+  <br>
+   <div class="row example-row">
+              <div class="col-md-3">Current Password</div><br /><!--.col-md-3-->
+              <div class="col-md-9">
+              <%= f.password_field :current_password, autocomplete: "off", class: 'form-control' ,required:true %> <i>(we need your current password to confirm your changes)</i>
+              </div><!--.col-md-9-->
+            </div><!--.row-->
+  
+  <br>
+  <div class="actions" style="margin-left: 10px;">
+    <%= f.submit "Update"  , class: 'btn btn-primary btn-ripple'%>
+  </div>
+<% end %>
+
+</div>
+
+<script>
+  $(document).ready(function () {
+    Pleasure.init();
+    Layout.init();
+    FormsValidationsParsley.init();
+
+  });
+  </script>

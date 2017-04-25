@@ -1,0 +1,31 @@
+ <h3 style="margin-left: 5%;">Comments:</h3>
+<% if @article.comments.present? %>
+<div>
+   <% @article.comments.each do |comment|%>
+      <div class="row" >
+        <div class="col-md-10 col-md-offset-2">
+          <div class="comments" style="margin: 10px 0px">
+
+            <div class="comment comment-box" style="margin-bottom: 0px; padding-bottom: 0px;">
+              <div class="user-photo"> <%= image_tag comment.user.photo.url(:small) %>
+              </div>
+
+              <div class="comment-body">
+              <h4><%=comment.user.name%></h4>
+                  <p id="edit_<%=comment.id%>"><%=comment.body %><br>
+                   <% if comment.user_id == current_user.id %>
+                       <%= link_to 'Edit', edit_article_comment_path(@article , comment), remote:true;  %> | 
+                         <%= link_to 'Destroy', article_comment_path(@article , comment), method: :delete , data: { confirm: 'Are you sure?' } %></p>
+                   <%end%>
+
+              </div><!--.comment-body-->
+            </div><!--.comment-->
+        </div><!--comments-->
+      </div><!--col-->
+     </div><!--row-->
+  <%end%>
+  <% else %>
+  <div style="margin-left: 6%;">No comments yet.</div>
+ <%end%>
+ </div>
+ 

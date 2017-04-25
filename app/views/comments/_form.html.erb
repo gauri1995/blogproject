@@ -1,0 +1,35 @@
+<%= form_for [ @article, @comment ], html: {class: 'form-horizontal parsley-validate'} do |f| %>
+ <ul>
+  <% if @comment.errors.full_messages.any? %>
+            <% @comment.errors.full_messages.each do |error_message| %>
+              <%= error_message if @comment.errors.full_messages.first == error_message %>
+            <% end %>
+  <% end %>
+  </ul>
+
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <div class="comments">
+
+            <div class="comment comment-box">
+              <div class="user-photo"> <%= image_tag current_user.photo.url(:small) %></div>
+              <div class="comment-body">
+
+                <div class="input-group" style="display: block;">
+                  <div class="inputer">
+                    <div class="input-wrapper">
+                    <%= f.text_area :body , class: 'form-control js-auto-size', :placeholder=>"Enter your Comment",required:true %>
+                    </div>
+                  </div><!--.inputer-->
+                  <br>
+                </div><!--.input-group-->
+                    <div class="input-group-btn" style="text-align: center;">
+                    <%= f.submit class: 'btn btn-primary btn-ripple' %>
+                  </div>
+
+              </div><!--.comment-body-->
+            </div><!--.comment-->
+        </div><!--col-->
+      </div><!--row-->
+</div><!--row-->
+<% end %>

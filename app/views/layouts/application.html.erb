@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>PLEASURE - Admin Panel</title>
+
+  <meta name="description" content="Pleasure is responsive, material admin dashboard panel">
+  <meta name="author" content="Teamfox">
+  <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-touch-fullscreen" content="yes">
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body>
+ 
+ <% if user_signed_in? || current_page?(root_path) || current_page?(articles_path)%>
+<div class="nav-bar-container">
+
+    <!-- BEGIN ICONS -->
+    <div class="nav-menu">
+      <div class="hamburger">
+        <span class="patty"></span>
+        <span class="patty"></span>
+        <span class="patty"></span>
+        <span class="patty"></span>
+        <span class="patty"></span>
+        <span class="patty"></span>
+      </div><!--.hamburger-->
+    </div><!--.nav-menu-->
+
+    <div class="nav-search">
+      <span class="search"></span>
+    </div><!--.nav-search-->
+
+    <!-- END OF ICONS -->
+
+    <div class="nav-bar-border"></div><!--.nav-bar-border-->
+
+    <!-- BEGIN OVERLAY HELPERS -->
+    <div class="overlay">
+      <div class="starting-point">
+        <span></span>
+      </div><!--.starting-point-->
+      <div class="logo">BLOGNOW</div><!--.logo-->
+    </div><!--.overlay-->
+
+    <div class="overlay-secondary"></div><!--.overlay-secondary-->
+    <!-- END OF OVERLAY HELPERS -->
+
+  </div><!--.nav-bar-container-->
+
+  <div class="content">
+
+    <div class="page-header full-content">
+      <div class="row">
+        <div class="col-sm-6">
+          <h1>Blogger</h1>
+        </div><!--.col-->
+        <div class="col-sm-6">
+          <ol class="breadcrumb">
+            <li><a href="/articles" class="active"><i class="ion-home"></i> Homepage</a></li>
+          </ol>
+        </div><!--.col-->
+      </div><!--.row-->
+    </div><!--.page-header-->
+  </div>
+
+  <%end%>
+    <%= yield %>
+    <% if user_signed_in? || current_page?(root_path)  || current_page?(articles_path)%>
+      <div class="footer-links margin-top-40" >
+      <div class="row no-gutters bg-indigo">
+        <div class="col-xs-6"></div><!--.col-->
+        <div class="col-xs-6" >
+          <a href="/articles">
+            <span class="state">Let's move to</span>
+            <span>Wall</span>
+            <span class="icon"><i class="ion-android-arrow-forward"></i></span>
+          </a>
+        </div><!--.col-->
+      </div><!--.row-->
+    </div><!--.footer-links-->
+    
+ <div class="layer-container">
+
+    <!-- BEGIN MENU LAYER -->
+    <div class="menu-layer">
+      <ul>
+        <li>
+          <a href="/articles">Home Page</a>
+        </li>
+        <%if user_signed_in?%>
+        <li>
+          <a href="javascript:;">User</a>
+          <ul class="child-menu">
+            <li><%= link_to 'Your profile' , profile_path(current_user.id) %></li>
+            
+
+          </ul>
+        </li>
+        <li>
+          <a href="/articles/new">New Article</a>
+        </li>
+        <li>
+          <%=link_to "Sign out",destroy_user_session_path, method: :delete %>
+        </li>
+        <%else %>
+                <li><%= link_to 'Sign Up',new_user_registration_path %></li>
+                 <li><%= link_to 'Log In' ,new_user_session_path%></li>
+        <%end%>
+      </ul>
+    </div><!--.menu-layer-->
+    <!-- END OF MENU LAYER -->
+
+    <!-- BEGIN SEARCH LAYER -->
+    <div class="search-layer">
+      <div class="search">
+        <form action="#">
+          <div class="form-group">
+            <input type="text" id="input-search" class="form-control" placeholder="type something">
+            <button type="submit" class="btn btn-default disabled"><i class="ion-search"></i></button>
+          </div>
+        </form>
+      </div><!--.search-->
+    </div><!--.search-layer-->
+    <!-- END OF SEARCH LAYER -->
+  </div><!--.layer-container-->
+ <%end%>
+
+  <%= javascript_include_tag 'zyield' %>
+  <%= custom_bootstrap_flash %>
+  </body>
+</html>
+
+

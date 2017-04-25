@@ -1,0 +1,53 @@
+ <div class="container" >
+     <div class="row" style="margin-top: -0px;">
+		 <div>
+			 <%= image_tag @article.photo.url(:large) ,class: "img-responsive" , :style => 'margin: auto;'%>
+			</div>
+	 </div>
+	<div class="content">
+		<div class="row">
+			<div class="col-md-12">
+				<h1 class="text-center margin-bottom-40" style="margin-top: 50px;"><%= @article.title %></h1>
+			</div><!--.col-->
+		</div><!--.row-->
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+                <%= @article.description %> 
+			</div><!--.col-->
+		</div><!--.row-->
+
+       </div><!--content-->
+   <div style="text-align: center;margin-top: 20px;" class="table table-hover ">
+				<%= link_to "Back", articles_path, class: 'btn btn-primary btn-ripple' %>
+           <%if user_signed_in?%>
+           <tr>
+                   <% if current_user.id == @article.user_id%>
+                      <%= link_to "Delete", article_path(@article), method: :delete,data: {confirm: "Really delete the article?"} , class: 'btn btn-primary btn-ripple toastr-notify' %>
+
+                       <%= link_to "Edit", edit_article_path(@article),class: 'btn btn-primary btn-ripple' %>
+                   <%end%>
+            <%else%>
+            <h4 style="margin-top: 20px;">To create your own articles you need to Sign Up!</h4>
+           <%end%>
+    </div>
+      <%if user_signed_in?%>
+        <br>
+          <%= render partial: 'comments/form' %>
+         <br>
+          <%= render partial: 'comments/show'%>
+      <%end%>
+</div><!--container-->
+
+<script>
+	$(document).ready(function () {
+		Pleasure.init();
+		Layout.init();
+		FormsValidationsParsley.init();
+		
+	});
+
+  $('#flash').fadeOut(8000)
+
+	</script>
+
+			

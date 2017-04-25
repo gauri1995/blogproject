@@ -1,0 +1,204 @@
+<% if current_user.id == @user.id %>
+<div class="container" style="padding: 0px;">
+  <!--   <div class="row" style="margin: 30px 0px">
+            <div class=" col-xs-12 xol-sm-6 col-md-4" style="text-align: center;">
+             
+                 <#%= image_tag @user.photo.url (:small) %><br/>
+          
+            </div> -->
+<div style="margin-top: -40px;">
+   <div style="text-align: center;"><%= image_tag @user.photo.url(:large), class: "img-responsive" , :style => 'margin: auto;'%></div>
+ </div>
+  <div class="content">
+    <div class="page-header full-content parallax" style="height: 45px; overflow: hidden">
+      <div class="header-tabs scrollable-tabs sticky">
+        <ul class="nav nav-tabs tabs-active-text-white tabs-active-border-yellow">
+          <li class="active"><a href="#about" data-toggle="tab" class="btn-ripple">About</a></li>
+      </div>
+
+    </div><!--.page-header-->
+
+  <div id="about" class="tab-pane">
+            <div class="row">
+              <div class="col-md-3">
+                <ul class="nav nav-tabs borderless vertical">
+                  <li class="active"><a href="#about_overview" data-toggle="tab">Overview</a></li>
+                  <li><a href="#about_timeline" data-toggle="tab">Blogs</a></li>
+                   <li><a href="#edit" data-toggle="tab">Edit Profile</a></li>
+                   <li><a href="#password" data-toggle="tab">Change Password</a></li>
+                  
+                </ul>
+              </div><!--.col-md-3-->
+              <div class="col-md-9">
+                <div class="tab-content" style="border: 0px;">
+
+                  <div class="tab-pane active" id="about_overview">
+                    <div class="legend">Contact Information</div>
+                    <div class="row">
+                      <div class="col-md-3">Name :</div><!--.col-md-3-->
+                      <div class="col-md-9"><%=@user.name%></div><!--.col-md-9-->
+                    </div><!--.row-->
+                    <div class="row">
+                      <div class="col-md-3">Email :</div><!--.col-md-3-->
+                      <div class="col-md-9"><%=@user.email%></div><!--.col-md-9-->
+                    </div><!--.row-->
+                    <div class="row">
+                      <div class="col-md-3">Mobile Number :</div><!--.col-md-3-->
+                      <div class="col-md-9"><%=@user.mobile_phone%></div><!--.col-md-9-->
+                    </div><!--.row-->
+                     <div class="row">
+                      <div class="col-md-3">Gender :</div><!--.col-md-3-->
+                      <div class="col-md-9"><%=@user.gender%></div><!--.col-md-9-->
+                    </div><!--.row-->
+                    <div class="row">
+                      <div class="col-md-3">Birth Date :</div><!--.col-md-3-->
+                      <div class="col-md-9"><%=@user.birth_date%></div><!--.col-md-9-->
+                    </div><!--.row-->
+                  </div><!--#about_overview.tab-pane-->
+                <div class="tab-pane" id="about_timeline">
+                     <% current_user.articles.each do |article|%>
+                                        <ul>
+                                        <li class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="text-align: center;"><%= link_to (image_tag article.photo.url(:thumb) ) ,article_path(article) ,class: 'img-responsive' , :style => 'margin: 10px 0px ; border-radius:5px;' %></li>
+                                        </ul>
+                      <%end%>
+                  </div><!--#about_timeline.tab-pane-->
+                <div class="tab-pane" id="edit">
+                  <div class="container">
+                    <h2 >Edit Profile</h2>
+
+                        <%= form_for(@user, url:registration_path(@user), html: { method: :put, class: 'parsley-validate' }) do |f| %>
+  
+                         <div class="row example-row">
+                           <div class="col-md-3">Email</div><br /><!--.col-md-3-->
+                            <div class="col-md-9">
+                              <%= f.email_field :email, autofocus: true ,class: 'form-control' %>
+
+                            </div><!--.col-md-9-->
+                         </div><!--.row-->
+                        <br>
+                         <div class="row example-row">
+                             <div class="col-md-3">Name</div><br /><!--.col-md-3-->
+                              <div class="col-md-9">
+                                <%= f.text_field :name, autofocus: true , class: 'form-control' ,required:true%>
+                              </div><!--.col-md-9-->
+                         </div><!--.row-->
+                           <br>
+                            <div class="row example-row">
+                           <div class="col-md-3">Mobile Number</div><br /><!--.col-md-3-->
+                            <div class="col-md-9">
+                              <%= f.text_field :mobile_phone, autofocus: true ,class: 'form-control' %>
+
+                            </div><!--.col-md-9-->
+                         </div><!--.row-->
+                          <div class="row example-row">
+                           <div class="col-md-3">Birth-Date</div><br /><!--.col-md-3-->
+                            <div class="col-md-9">
+                              <%= f.text_field :birth_date, autofocus: true ,class: 'form-control' %>
+
+                            </div><!--.col-md-9-->
+                         </div><!--.row-->
+                          <div class="row example-row">
+                           <div class="col-md-3">Gender</div><br /><!--.col-md-3-->
+                            <div class="col-md-9">
+                              <%= f.text_field :gender, autofocus: true ,class: 'form-control' %>
+
+                            </div><!--.col-md-9-->
+                         </div><!--.row-->
+                        <div class="row example-row">
+                           <div class="col-md-3">Profile Image</div><br /><!--.col-md-3-->
+                           <div class="col-md-9">
+                           
+                                          <div class="fileinput fileinput-new" data-provides="fileinput">
+                                            <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
+                                                <%if @user.photo.exists?%>
+                                               <%= image_tag @user.photo.url , :size =>'180x140' %>
+                                                <%end%>
+                                            </div>
+                                                 <div>
+                                          <span class="btn btn-default btn-file">
+                                             <span class="fileinput-new">Select image</span>
+                                             <span class="fileinput-exists">Change</span>
+                                              <%if @user.photo.exists?%>
+                                              <%= f.file_field :photo %></span>
+                                               <%else%>
+                                               <%= f.file_field :photo ,required:true%>
+                                              <%end%>
+                                          <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                        </div>
+                                       </div>
+                                    </div>
+                                    </div>
+                          
+                          <br>
+                           <div class="actions" style="margin-left: 10px;">
+                               <%= f.submit "Update"  , class: 'btn btn-primary btn-ripple'%>
+                           </div>
+                        <% end %>
+                     
+                    </div><!--#edit.tab-pane-->
+                    </div>
+          <div class="tab-pane" id="password">
+                  <div class="container">
+                        <h2 >Change Password</h2>
+
+                           <%= form_for(@user, url: registration_path(@user), html: { method: :put, class: 'parsley-validate' }) do |f| %>
+  
+                             <div class="row example-row">
+                                 <div class="col-md-3">Password</div><br /><!--.col-md-3-->
+                                  <div class="col-md-9">
+                                      <%= f.password_field :password, autocomplete: "off" , class: 'form-control',required:true %>
+
+                                   </div><!--.col-md-9-->
+                             </div><!--.row-->
+                          <br>
+                         <div class="row example-row">
+                                <div class="col-md-3">Password Confirmation</div><br /><!--.col-md-3-->
+                                <br>
+                                  <div class="col-md-9">
+                                     <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' ,required:true %>
+                                  </div><!--.col-md-9-->
+                         </div><!--.row-->
+                          <br>
+                           <div class="row example-row">
+                               <div class="col-md-3">Current Password</div><br /><!--.col-md-3-->
+                                <div class="col-md-9">
+                                  <%= f.password_field :current_password, autocomplete: "off", class: 'form-control' ,required:true %> <i>(we need your current password to confirm your changes)</i>
+                                  </div>
+                                </div><!--.row-->
+                             <br>
+                          <div class="actions" style="margin-left: 10px;">
+                              <%= f.submit "Update"  , class: 'btn btn-primary btn-ripple'%>
+                           </div>
+                       <% end %>
+                      </div>
+
+                    
+                  </div><!--#password.tab-pane-->
+                  </div>
+                  </div>
+                    
+      
+
+                </div><!--.tab-content-->
+
+              </div><!--.col-md-9-->
+            </div><!--.row-->
+   </div><!--#about.tab-pane-->
+  </div>
+
+ 
+</div>
+
+  <%else%>
+  <div style="margin-top: 50px;">NOT YOUR PROFILE.PLEASE CHECK THE URL.</div>
+  <%end%>
+
+<script>
+	$(document).ready(function () {
+		Pleasure.init();
+		Layout.init();
+    FormsValidationsParsley.init();
+	});
+
+	</script>
+ 

@@ -1,0 +1,93 @@
+<%= form_for(@article, html: {multipart: true , class: 'form-horizontal  parsley-validate'}) do |f| %>
+ 
+  <ul>
+  <% if @article.errors.full_messages.any? %>
+            <% @article.errors.full_messages.each do |error_message| %>
+              <%= error_message if @article.errors.full_messages.first == error_message %>
+            <% end %>
+  <% end %>
+  </ul>
+  
+      <div class="row">
+      <div class="col-md-12">
+        <div class="panel">
+          <div class="panel-heading">
+            <div class="panel-title"><h4>FORM</h4></div>
+          </div><!--.panel-heading-->
+          <div class="panel-body">
+
+            <div class="row">
+                <div class="form-body">
+
+                  <div class="form-group">
+                    <label class="control-label col-md-3">Title</label>
+                    <div class="col-md-5">
+                      <div class="inputer">
+                        <div class="input-wrapper">
+                         <%= f.text_field :title , class: 'form-control', required:true %>
+                         
+                        </div>
+                      </div>
+                    </div>
+                  </div><!--.form-group-->
+
+                  <div class="form-group">
+                    <label class="control-label col-md-3">Description</label>
+                    <div class="col-md-5">
+                      <div class="inputer">
+                        <div class="input-wrapper">
+                        <%= f.text_area :description , class: 'form-control',required:true %>
+                        </div>
+                      </div>
+                    </div>
+                  </div><!--.form-group-->
+
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-md-3">Image Upload </label><!--.col-md-3-->
+              <div class="col-md-5">
+                  <div class="fileinput fileinput-new" data-provides="fileinput">
+                  <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
+                     <%if @article.photo.exists?%>
+                  <%= image_tag @article.photo.url , :size =>'180x140' %>
+                  <%end%>
+                  </div>
+                 
+                  <div>
+                    <span class="btn btn-default btn-file">
+                      <span class="fileinput-new">Select image</span>
+                    <span class="fileinput-exists">Change</span>
+                    <%if @article.photo.exists?%>
+                    <%= f.file_field :photo %></span>
+                    <%else%>
+                    <%= f.file_field :photo ,required:true%>
+                    <%end%>
+                    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                  </div><!--.col-md-5-->
+                </div><!--form-group-->
+
+              </div>
+            </div>
+            <p>
+               <%= f.label :tag_list %><br />
+                <%= f.text_field :tag_list %>
+            </p>
+
+                 <div class="form-actions">
+                  <div class="row">
+                    <p style="text-align: center;">
+                      <%= f.submit class: 'btn btn-primary btn-ripple' %>
+                    </p>
+                  </div>
+                 </div> 
+                 </div><!--form-body-->
+            </div><!--.row-->
+
+          </div><!--.panel-body-->
+        </div><!--.panel-->
+      </div><!--.col-md-12-->
+    </div><!--.row-->
+
+<% end %>
+
+
